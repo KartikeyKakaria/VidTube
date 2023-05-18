@@ -1,6 +1,17 @@
+import { config } from "dotenv"
+config()
 import express from "express"
-
+import { connect } from "mongoose"
 const app = express()
 const PORT = process.env.PORT || 8000
-
-app.listen(PORT, ()=>console.log(`listening at port: ${PORT}`))
+const dbConn = ()=>{
+    connect(process.env.MONGO_URI)
+    .then(()=>console.log("connecyed to DB"))
+    .catch(err=>{
+        console.log(err)
+    })
+}
+app.listen(PORT, ()=>{
+    dbConn()
+    console.log(`listening at port: ${PORT}`);
+})
