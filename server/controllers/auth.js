@@ -1,6 +1,9 @@
 import mongoose from "mongoose"
 import User from '../models/User.js'
 import bcrypt from "bcryptjs"
+import { createError } from '../error.js'
+import jwt from "jsonwebtoken"
+
 export const signup = async (req, res, next) => {
     try {
         const salt = bcrypt.genSaltSync(10);
@@ -9,6 +12,25 @@ export const signup = async (req, res, next) => {
         await newUser.save();
         res.status(201).send("Created the User")
     } catch (error) {
-        next(error)
+        next(createError(500, error.message))
+    }
+}
+
+export const signin = async (req, res, next) => {
+    try {
+        const user = await User.findOne({ name: req.body.name });
+        if (!user) return next(createError(404, "Invalid credentials"));
+
+        const isCorrect = await bcrypt.compare(req.body.password.toString(), user.password);
+        if (!isCorrect) return next(createError(404, "Invalid credentials"));
+
+        const { password, ...userDetails } = user._doc;
+
+        const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY);
+        return res.cookie("access-token", token, {
+            httpOnly: true
+        }).status(200).json(userDetails)
+    } catch (error) {
+
     }
 }

@@ -1,5 +1,5 @@
 import {Router} from "express"
-import { signup } from "../controllers/auth.js"
+import { signup, signin} from "../controllers/auth.js"
 
 const authRouter = Router();
 
@@ -7,7 +7,7 @@ const authRouter = Router();
 authRouter.post("/signup",signup)
 
 //SIGN IN
-authRouter.post("/signin",)
+authRouter.post("/signin",signin)
 
 //GOOGLE AUTH
 authRouter.post("/google")
