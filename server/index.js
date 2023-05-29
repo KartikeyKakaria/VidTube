@@ -13,9 +13,9 @@ const PORT = process.env.PORT || 8000
 
 const dbConn = () => {
     connect(process.env.MONGO_URI)
-        .then(() => console.log("connecyed to DB"))
+        .then(() => console.log("connected to DB"))
         .catch(err => {
-            console.log(err)
+            throw new Error(err)
         })
 }
 
