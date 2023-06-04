@@ -7,7 +7,7 @@ import videoRouter from "./routes/videos.js";
 import commentRouter from "./routes/comments.js";
 import authRouter from "./routes/auth.js";
 import cookieParser from "cookie-parser";
-
+import cors from "cors"
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -35,6 +35,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors());
 
 app.use("/api/users", userRouter);
 app.use("/api/videos", videoRouter);
