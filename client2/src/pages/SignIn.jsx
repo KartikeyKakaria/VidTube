@@ -4,6 +4,9 @@ import axios from "axios";
 import { baseUrl } from "../utils/apiRoutes";
 import { useDispatch } from "react-redux";
 import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
+import { auth, provider } from "../firebase";
+import { signInWithPopup } from "firebase/auth";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -81,6 +84,11 @@ const SignIn = () => {
       dispatch(loginFailure());
     }
   };
+  const signInWithGoogle = ()=>{
+    signInWithPopup(auth, provider)
+    .then(result=>console.log(result))
+    .catch(console.log)
+  }
   return (
     <Container>
       <Wrapper>
@@ -96,6 +104,8 @@ const SignIn = () => {
           placeholder="password"
         />
         <Button onClick={handleLogin}>Sign in</Button>
+        <Title>or</Title>
+        <Button onClick={signInWithGoogle}>Sign in with google</Button>
         <Title>or</Title>
         <Input
           onChange={(e) => setName(e.target.value)}
