@@ -84,9 +84,20 @@ const SignIn = () => {
       dispatch(loginFailure());
     }
   };
-  const signInWithGoogle = ()=>{
+  const signInWithGoogle = async()=>{
+    dispatch(loginStart())
     signInWithPopup(auth, provider)
-    .then(result=>console.log(result))
+    .then(result=>{
+      axios.post(`${baseUrl}auth/google`,{
+        name:result.user.displayName,
+        email:result.user.email,
+        img:result.user.photoURL
+      }).then(res=>{
+        dispatch(loginSuccess(res.data))
+      }).catch(e=>{
+        loginFailure();
+      })
+    })
     .catch(console.log)
   }
   return (

@@ -13,7 +13,6 @@ const UserSchema = new Schema({
     },
     password: {
         type: String,
-        required: true,
     },
     img: {
         type: String
@@ -24,6 +23,10 @@ const UserSchema = new Schema({
     },
     subscribedChannels: {
         type: [String]
+    },
+    fromGoogle:{
+        type:Boolean,
+        default:false
     }
 
 }, { timestamps: true })

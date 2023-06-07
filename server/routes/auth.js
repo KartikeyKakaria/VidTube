@@ -1,15 +1,15 @@
-import {Router} from "express"
-import { signup, signin} from "../controllers/auth.js"
+import { Router } from "express";
+import { signup, signin, googleAuth } from "../controllers/auth.js";
 
 const authRouter = Router();
 
 //CREATE A USER
-authRouter.post("/signup",signup)
+authRouter.post("/signup", signup);
 
 //SIGN IN
-authRouter.post("/signin",signin)
+authRouter.post("/signin", signin);
 
 //GOOGLE AUTH
-authRouter.post("/google")
+authRouter.post("/google", googleAuth);
 
 export default authRouter;
